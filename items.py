@@ -18,7 +18,7 @@ def get_item(item_id):
             items.compsign, items.glider_class,
             items.options, users.username,
             users.id user_id
-            from items, users
+            FROM items, users
             WHERE items.user_id = users.id
             AND items.id = ?"""
     return db.query(sql, [item_id])[0]
@@ -35,4 +35,11 @@ def update_item(item_id, glider_type, callsign, compsign, glider_class, options)
 def remove_item(item_id):
     sql = "DELETE FROM items WHERE id = ?"
     db.execute(sql, [item_id])
+
+def search_items(query):
+    sql = """SELECT id, glider_type, callsign, compsign, glider_class, options
+            FROM items
+            WHERE callsign LIKE ?
+            ORDER BY id DESC"""
+    return db.query(sql, ["%" + query + "%"])
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Etsi purjelentokone</title>
+</head>
+
+<body>
+
+    <h1>Etsi purjelentokone</h1>
+    <form action ="/search_item" method="GET">
+
+    <p>
+        Hakusana: <input type="text" name="query" value="{{ query }}">
+    </p>
+    
+    <input type="submit" value="Hae">
+
+    </form>
+
+    <p>
+        <a href="/">Palaa etusivulle</a>
+    </p>
+
+    {% if query %}
+    <h2> Hakutulokset </h2>
+
+    <ul>
+        {% for item in results %}
+        <li> <a href="/item/{{ item.id }}">{{ item.glider_type }}</a> - {{ item.callsign }} - {{ item.compsign }} - {{ item.glider_class }} - {{ item.options }}</li>
+        {% endfor %}
+    </ul>
+
+    {% endif %}
+
+</body>
+
+</html>
