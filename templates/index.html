@@ -13,6 +13,8 @@
   <p> Olet kirjautunut nimellä {{ session.username }}, ID-numero: {{ session.user_id }} </p>
   
   <p> <a href="/logout">Kirjaudu ulos</a> </p>
+
+  <p><a href="/new_item">Lisää purjelentokone</a></p>
     
   {% else %}
   
@@ -24,7 +26,6 @@
   {% endif %}
   
   <p>
-    <a href="/new_item">Lisää purjelentokone</a>
     <a href="/search_item">Etsi purjelentokone</a>
   </p>
 

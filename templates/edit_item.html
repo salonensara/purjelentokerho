@@ -12,17 +12,17 @@
   <form action="/update_item" method="post">
     <p>
       Konetyyppi: <br />
-      <input type="text" name="glider_type" value="{{ item.glider_type }}"/>
+      <input type="text" name="glider_type" value="{{ item.glider_type }}" maxlength="50" required/>
     </p>
 
     <p>
       Rekisteritunnus: <br />
-      <input type="text" name="callsign" size="8" value="{{ item.callsign }}" />
+      <input type="text" name="callsign" size="8" value="{{ item.callsign }}" maxlength="10" required/>
     </p>
 
     <p>
       Kilpailutunnus: <br />
-      <input type="text" name="compsign" size="5" value="{{ item.compsign }}" />
+      <input type="text" name="compsign" size="5" value="{{ item.compsign }}" maxlength="5" required/>
     </p>    
 
     <p>

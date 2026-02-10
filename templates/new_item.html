@@ -12,22 +12,22 @@
   <form action="/create_item" method="post">
     <p>
       Konetyyppi: <br />
-      <input type="text" name="glider_type" />
+      <input type="text" name="glider_type" maxlength="50" required/>
     </p>
 
     <p>
       Rekisteritunnus: <br />
-      <input type="text" name="callsign" size="8" />
+      <input type="text" name="callsign" size="8" maxlength="10" required/>
     </p>
 
     <p>
       Kilpailutunnus: <br />
-      <input type="text" name="compsign" size="5" />
+      <input type="text" name="compsign" size="5" maxlength="5" />
     </p>    
 
     <p>
       Luokka: <br />
-      <input type="radio" name="glider_class" value="Vakio" /> Vakio
+      <input type="radio" name="glider_class" value="Vakio" checked/> Vakio
       <input type="radio" name="glider_class" value="15 m" /> 15 m
       <input type="radio" name="glider_class" value="18 m" /> 18 m
       <input type="radio" name="glider_class" value="Kaksipaikkainen" /> Kaksipaikkainen
@@ -36,7 +36,7 @@
 
     <p>
       Lisävalinnat:
-      <input type="radio" name="options" value="Ei moottoria" /> Ei moottoria
+      <input type="radio" name="options" value="Ei moottoria" checked/> Ei moottoria
       <input type="radio" name="options" value="Turbo" /> Turbo
       <input type="radio" name="options" value="FES" /> FES
       <input type="radio" name="options" value="Suihkumoottori" /> Suihkumoottori

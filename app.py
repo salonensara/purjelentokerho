@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
@@ -8,6 +8,10 @@ import items
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+def require_login():
+    if "user_id" not in session:
+        abort(403)
 
 @app.route("/")
 def index():
@@ -27,17 +31,28 @@ def search_item():
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
     return render_template("show_item.html", item=item)
 
 @app.route("/new_item")
 def new_item():
+    require_login()
     return render_template("new_item.html")
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
+    require_login()
+
     glider_type = request.form["glider_type"]
+    if not glider_type or len(glider_type) > 50:
+        abort(403)
     callsign = request.form["callsign"]
+    if not callsign or len(callsign) > 10:
+        abort(403)
     compsign = request.form["compsign"]
+    if len(compsign) > 5:
+        abort(403)
     glider_class = request.form["glider_class"]
     options = request.form["options"]
     user_id = session["user_id"]
@@ -48,15 +63,32 @@ def create_item():
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
+    require_login()
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
     return render_template("edit_item.html", item=item)
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
+    
     item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
     glider_type = request.form["glider_type"]
+    if not glider_type or len(glider_type) > 50:
+        abort(403)
     callsign = request.form["callsign"]
+    if not callsign or len(callsign) > 10:
+        abort(403)
     compsign = request.form["compsign"]
+    if len(compsign) > 5:
+        abort(403)
     glider_class = request.form["glider_class"]
     options = request.form["options"]
 
@@ -66,8 +98,15 @@ def update_item():
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
+    require_login()
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+
+    if item["user_id"] != session["user_id"]:
+        abort(403)
+
     if request.method == "GET":
-        item = items.get_item(item_id)
         return render_template("remove_item.html", item=item)
 
     if request.method == "POST":
