@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> Käyttäjä {{ user.username }}</title>
+</head>
+
+<body>
+
+  <h1> Käyttäjä {{ user.username }} </h1>
+
+  <p>
+    Käyttäjä on lisännyt yhteensä {{ items | count }} purjelentokonetta.
+  </p>
+
+  <h2>Käyttäjän lisäämät purjelentokoneet</h2>
+
+  <ul>
+    {% for item in items %}
+    <li><a href = "/item/{{ item.id }}">{{ item.glider_type }}</a> - {{ item.callsign }} - {{ item.compsign }} - {{ item.glider_class }} - {{ item.options }}</a></li>
+    {% endfor %}
+  </ul>
+
+
+  <p> <a href="/">Takaisin</a> </p>
+
+</body>
