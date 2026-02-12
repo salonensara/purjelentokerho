@@ -11,7 +11,7 @@ def get_user(user_id):
 
 
 def get_items(user_id):
-    sql = """SELECT id, glider_type, callsign, compsign
+    sql = """SELECT id, glider_type, callsign, compsign, glider_class, options
             FROM items
             WHERE user_id = ?
             ORDER BY id DESC"""
@@ -27,7 +27,7 @@ def check_login(username, password):
      result = db.query(sql, [username])
      if not result:
          return None
-     
+
      user_id = result[0]["id"]
      password_hash = result[0]["password_hash"]
      if check_password_hash(password_hash, password):

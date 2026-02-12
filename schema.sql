@@ -11,5 +11,14 @@ CREATE TABLE items (
     compsign TEXT,
     glider_class TEXT,
     options TEXT,
-    user_id INTEGER REFERENCE users
+    user_id INTEGER REFERENCES users
+);
+
+CREATE TABLE reservations (
+    id INTEGER PRIMARY KEY,
+    begin_date TEXT,
+    end_date TEXT,
+    info TEXT,
+    user_id INTEGER REFERENCES users,
+    item_id INTEGER REFERENCES items
 );

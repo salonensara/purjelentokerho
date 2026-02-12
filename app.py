@@ -1,6 +1,7 @@
 import sqlite3
 from flask import Flask
-from flask import abort, redirect, render_template, request, session
+from flask import flash, abort, redirect, render_template, request, session
+from datetime import datetime
 import db
 import config
 import items
@@ -17,6 +18,26 @@ def require_login():
 def index():
     all_items = items.get_items()
     return render_template("index.html", items=all_items)
+
+@app.route("/create_reservation", methods=["POST"])
+def create_reservation():
+    require_login()
+
+    user_id = session["user_id"]
+    item_id = request.form["item_id"]
+    if not item_id:
+        abort(403)
+    info = request.form["info"]
+    if not info or len(info) > 1000:
+        abort(403)
+    begin_date = request.form.get("begin_date")
+    begin_date = datetime.strptime(begin_date, "%Y-%m-%d").date()
+    end_date = request.form.get("end_date")
+    end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+    print(f"testi: {begin_date} ja {type(begin_date)}")
+    items.add_reservation(item_id, begin_date, end_date, info, user_id)
+
+    return redirect("/item/"+str(item_id))
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -41,7 +62,8 @@ def show_item(item_id):
     item = items.get_item(item_id)
     if not item:
         abort(404)
-    return render_template("show_item.html", item=item)
+    reservations = items.get_reservations(item_id)
+    return render_template("show_item.html", item=item, reservations=reservations)
 
 @app.route("/new_item")
 def new_item():
@@ -59,7 +81,7 @@ def create_item():
     if not callsign or len(callsign) > 10:
         abort(403)
     compsign = request.form["compsign"]
-    if len(compsign) > 5:
+    if not compsign or len(compsign) > 5:
         abort(403)
     glider_class = request.form["glider_class"]
     options = request.form["options"]
@@ -141,7 +163,8 @@ def create():
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
 
-    return "Tunnus luotu"
+    flash("Tunnus luotu onnistuneesti!", "success")
+    return redirect("/")
     
 @app.route("/login", methods=["GET", "POST"])
 
