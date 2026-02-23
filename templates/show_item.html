@@ -10,13 +10,16 @@
   <h1> {{ item.glider_type }} </h1>
 
   {% if session.user_id == item.user_id %}
-  <p> Olet kirjautunut nimellä {{ session.username }}, ID-numero: {{ session.user_id }} </p>
+  <p> Olet kirjautunut nimellä {{ session.username }} </p>
   <p>
     <a href="/edit_item/{{ item.id }}">Muokkaa</a>
     <a href="/remove_item/{{ item.id }}">Poista</a>
   </p>
   {% endif %}
 
+  {% if item.image %}
+  <img src="/image/{{ item.id }}" alt="{{ item.glider_type }}" style="width: 200 px;"/>
+  {% endif %}
 
   <p>Rekisteritunnus: {{ item.callsign }}</p>
   <p>Kilpailutunnus: {{ item.compsign }}</p>

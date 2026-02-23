@@ -15,7 +15,7 @@
       <div class="alert">{{ message }}</div>
     {% endfor %}
   {% endif %}
-{% endwith %}
+  {% endwith %}
 
   {% if session.username %}
   <p> Olet kirjautunut nimellä {{ session.username }}, ID-numero: {{ session.user_id }} </p>

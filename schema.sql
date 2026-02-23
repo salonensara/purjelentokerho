@@ -11,6 +11,7 @@ CREATE TABLE items (
     compsign TEXT,
     glider_class TEXT,
     options TEXT,
+    image BLOB,
     user_id INTEGER REFERENCES users
 );
 

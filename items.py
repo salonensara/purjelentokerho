@@ -13,10 +13,10 @@ def get_reservations(item_id):
             ORDER BY reservations.id DESC"""
     return db.query(sql, [item_id])
 
-def add_item(glider_type, callsign, compsign, glider_class, options, user_id):
+def add_item(glider_type, callsign, compsign, glider_class, options, image, user_id):
     sql = """INSERT INTO items (glider_type, callsign, compsign,
-            glider_class, options, user_id) VALUES (?, ?, ?, ?, ?, ?)"""
-    db.execute(sql, [glider_type, callsign, compsign, glider_class, options, user_id])
+            glider_class, options, image, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)"""
+    db.execute(sql, [glider_type, callsign, compsign, glider_class, options, image, user_id])
 
 def get_items():
     sql = """SELECT id, glider_type, callsign, compsign,
@@ -28,7 +28,7 @@ def get_item(item_id):
             items.id,
             items.glider_type, items.callsign,
             items.compsign, items.glider_class,
-            items.options, users.username,
+            items.options, items.image, users.username,
             users.id user_id
             FROM items, users
             WHERE items.user_id = users.id
@@ -36,14 +36,15 @@ def get_item(item_id):
     result = db.query(sql, [item_id])
     return result[0] if result else None
 
-def update_item(item_id, glider_type, callsign, compsign, glider_class, options):
+def update_item(item_id, glider_type, callsign, compsign, glider_class, options, image):
     sql = """UPDATE items SET glider_type = ?,
                     callsign = ?,
                     compsign = ?,
                     glider_class = ?,
-                    options = ?
+                    options = ?,
+                    image = ?
             WHERE   id = ?"""
-    db.execute(sql, [glider_type, callsign, compsign, glider_class, options, item_id])
+    db.execute(sql, [glider_type, callsign, compsign, glider_class, options, image, item_id])
 
 def remove_item(item_id):
     sql = "DELETE FROM items WHERE id = ?"

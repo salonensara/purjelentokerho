@@ -1,5 +1,6 @@
 import sqlite3
 from flask import Flask
+from flask import Response
 from flask import flash, abort, redirect, render_template, request, session
 from datetime import datetime
 import db
@@ -65,6 +66,14 @@ def show_item(item_id):
     reservations = items.get_reservations(item_id)
     return render_template("show_item.html", item=item, reservations=reservations)
 
+@app.route("/image/<int:item_id>")
+def show_image(item_id):
+    item = items.get_item(item_id)
+    if item and item["image"]:
+        return Response(item["image"], mimetype="image")
+    else:
+        abort(404)
+
 @app.route("/new_item")
 def new_item():
     require_login()
@@ -87,7 +96,15 @@ def create_item():
     options = request.form["options"]
     user_id = session["user_id"]
 
-    items.add_item(glider_type, callsign, compsign, glider_class, options, user_id)
+    file = request.files["image"]
+    if not file.filename.endswith((".jpg", ".png")):
+        return "VIRHE: väärä tiedostomuoto"
+
+    image = file.read()
+    if len(image) > 100*1024:
+        return "VIRHE: liian suuri kuva"
+
+    items.add_item(glider_type, callsign, compsign, glider_class, options, image, user_id)
 
     return redirect("/")
 
@@ -121,8 +138,15 @@ def update_item():
         abort(403)
     glider_class = request.form["glider_class"]
     options = request.form["options"]
+    file = request.files["image"]
+    if not file.filename.endswith((".jpg", ".png")):
+        return "VIRHE: väärä tiedostomuoto"
 
-    items.update_item(item_id, glider_type, callsign, compsign, glider_class, options)
+    image = file.read()
+    if len(image) > 100*1024:
+        return "VIRHE: liian suuri kuva"
+
+    items.update_item(item_id, glider_type, callsign, compsign, glider_class, options, image)
 
     return redirect("/item/" + str(item_id))
 
