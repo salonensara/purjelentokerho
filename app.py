@@ -1,4 +1,5 @@
 import sqlite3
+import secrets
 from flask import Flask
 from flask import Response
 from flask import flash, abort, redirect, render_template, request, session
@@ -15,6 +16,12 @@ def require_login():
     if "user_id" not in session:
         abort(403)
 
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)
+
 @app.route("/")
 def index():
     all_items = items.get_items()
@@ -23,6 +30,7 @@ def index():
 @app.route("/create_reservation", methods=["POST"])
 def create_reservation():
     require_login()
+    check_csrf()
 
     user_id = session["user_id"]
     item_id = request.form["item_id"]
@@ -79,11 +87,13 @@ def show_image(item_id):
 @app.route("/new_item")
 def new_item():
     require_login()
+    check_csrf()
     return render_template("new_item.html")
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
     require_login()
+    check_csrf()
 
     glider_type = request.form["glider_type"]
     if not glider_type or len(glider_type) > 50:
@@ -113,6 +123,8 @@ def create_item():
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
     require_login()
+    check_csrf()
+
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -122,7 +134,7 @@ def edit_item(item_id):
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
-    
+    check_csrf()
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -158,6 +170,7 @@ def update_item():
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     require_login()
+    
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -169,6 +182,7 @@ def remove_item(item_id):
         return render_template("remove_item.html", item=item)
 
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
@@ -187,15 +201,17 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+        flash("VIRHE: Salasanat eivät täsmää!", "error")
+        return render_template("register.html")
     if not password1 or len(password1) > 20:
         abort(403)
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
+        flash("VIRHE: Tunnus on jo varattu!", "error")
+        return render_template("register.html")
 
-    flash("Tunnus luotu onnistuneesti!", "success")
+    flash("JIPPII! Tunnus luotu onnistuneesti!", "success")
     return redirect("/")
     
 @app.route("/login", methods=["GET", "POST"])
@@ -212,9 +228,11 @@ def login():
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
-            return "VIRHE: väärä tunnus tai salasana"
+            flash("VIRHE: Väärä tunnus tai salasana!", "error")
+            return render_template("login.html")
 
 @app.route("/logout")
 def logout():

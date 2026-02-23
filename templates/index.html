@@ -6,13 +6,9 @@
 
 {% block content %}
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert">{{ message }}</div>
-  {% endfor %}
-{% endif %}
-{% endwith %}
+<p>
+  Tervetuloa purjelentokerhon sovellukseen! Klikkaamalla alla olevasta listasta purjekonetta näet lisätietoja koneesta ja siihen tehdyt koneanomukset. Voit myös lisätä uusia purjelentokoneita tai hakea purjelentokonetta hakusanalla. Ensin kannattaa rekisteröityä käyttäjäksi.
+</p>
 
 <h2>Kerhon purjelentokoneet</h2>
 

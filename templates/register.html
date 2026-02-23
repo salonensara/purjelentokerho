@@ -5,9 +5,10 @@
 {% block subtitle %} Lisää uusi käyttäjä {% endblock %}
 
 {% block content %}
+
 <form action="/create" method="post">
   <p>
-    Tunnus: <br />
+    Käyttäjätunnus: <br />
     <input type="text" name="username" maxlength="10" required />
   </p>
   <p>

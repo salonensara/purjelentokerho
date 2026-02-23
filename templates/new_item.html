@@ -43,7 +43,7 @@
     Lisää kuva <it>(JPG- tai PNG-tiedosto)</it>:
     <input type="file" name="image" value="image" accept=".jpg, .png"/> 
   </p>
-
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Lisää" />
 </form>
 

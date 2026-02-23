@@ -44,7 +44,7 @@ a:hover {
 
 .content {
     background-color: rgb(35, 53, 91);
-    padding: 1em;
+    padding: 2em;
     margin-top: 0em;
     margin-bottom: 0em;
     border: 0px;
@@ -132,4 +132,17 @@ input[type="submit"]:active {
 
 .glider_info {
     margin-left: 1em;
+}
+
+.alert {
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+.alert-error {
+    color: red;
+}
+
+.alert-success {
+    color: mediumspringgreen;
 }
