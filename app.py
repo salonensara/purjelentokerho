@@ -6,7 +6,6 @@ from flask import Flask
 from flask import Response
 from flask import flash, abort, redirect, render_template, request, session
 
-import db
 import config
 import items
 import users
@@ -83,8 +82,7 @@ def show_image(item_id):
     item = items.get_item(item_id)
     if item and item["image"]:
         return Response(item["image"], mimetype="image")
-    else:
-        abort(404)
+    abort(404)
 
 @app.route("/new_item")
 def new_item():
@@ -172,7 +170,7 @@ def update_item():
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     require_login()
-    
+
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -188,8 +186,7 @@ def remove_item(item_id):
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
-        else:
-            return redirect("/item/" + str(item_id))
+        return redirect("/item/" + str(item_id))
 
 @app.route("/register")
 def register():
@@ -215,13 +212,13 @@ def create():
 
     flash("JIPPII! Tunnus luotu onnistuneesti!", "success")
     return redirect("/")
-    
+
 @app.route("/login", methods=["GET", "POST"])
 
 def login():
     if request.method == "GET":
-        return render_template("login.html")      
-        
+        return render_template("login.html")
+
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -232,9 +229,9 @@ def login():
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            flash("VIRHE: Väärä tunnus tai salasana!", "error")
-            return render_template("login.html")
+
+        flash("VIRHE: Väärä tunnus tai salasana!", "error")
+        return render_template("login.html")
 
 @app.route("/logout")
 def logout():

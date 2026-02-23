@@ -56,6 +56,6 @@ def search_items(query):
             FROM items
             WHERE glider_type LIKE ? OR callsign LIKE ?
             ORDER BY id DESC"""
-    
+
     search_term = "%" + (query or "") + "%"
     return db.query(sql, [search_term, search_term])
