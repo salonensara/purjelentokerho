@@ -1,38 +1,35 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Etsi purjelentokone</title>
-</head>
+{% block title %} Purjelentokerho {% endblock %}
+{% block subtitle %} Haku {% endblock %}
 
-<body>
+{% block content %}
+<form action ="/search_item" method="GET">
 
-    <h1>Etsi purjelentokone</h1>
-    <form action ="/search_item" method="GET">
+<p>
+    Hakusana (konetyyppi tai rekisteritunnus):
+</p>
+<input type="text" name="query" value="{{ query }}"> <br />
+<input type="submit" value="Hae">
 
-    <p>
-        Hakusana (konetyyppi tai rekisteritunnus): <input type="text" name="query" value="{{ query }}">
-    </p>
-    
-    <input type="submit" value="Hae">
+</form>
 
-    </form>
+<p>
+    <a href="/">Palaa etusivulle</a>
+</p>
 
-    <p>
-        <a href="/">Palaa etusivulle</a>
-    </p>
+{% if query %}
+<h2> Hakutulokset </h2>
 
-    {% if query %}
-    <h2> Hakutulokset </h2>
-
-    <ul>
-        {% for item in results %}
-        <li> <a href="/item/{{ item.id }}">{{ item.glider_type }}</a> - {{ item.callsign }} - {{ item.compsign }} - {{ item.glider_class }} - {{ item.options }}</li>
-        {% endfor %}
-    </ul>
+{% for item in results %}
+<div class="item">
+    <h3>
+        <a href="/item/{{ item.id }}">{{ item.glider_type }}</a>
+    </h3>
+    {{ item.callsign }} - {{ item.compsign }} - {{ item.glider_class }} - {{ item.options }}
+</div>
+{% endfor %}
 
     {% endif %}
 
-</body>
-
-</html>
+{% endblock %}

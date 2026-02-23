@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Poista purjelentokone</title>
-</head>
+{% block title %} Purjelentokerho {% endblock %}
 
-<body>
+{% block subtitle %} Poista purjelentokone {% endblock %}
 
-  <h1> Poista purjelentokone </h1>
+{% block content %}
+<p>Haluatko varmasti poistaa purjelentokoneen {{ item.glider_type }} {{ item.callsign }}?</p>
 
-  <p>Haluatko varmasti poistaa purjelentokoneen {{ item.glider_type }} {{ item.callsign }}?</p>
-
-  <form action="/remove_item/{{ item.id }}" method="post">
-    <input type="submit" name="remove" value="Poista">
-    <input type="submit" name="return" value="Peruuta"> 
-  </form>
-</body>
-
-</html>
+<form action="/remove_item/{{ item.id }}" method="post">
+  <input type="submit" name="remove" value="Poista">
+  <input type="submit" name="return" value="Peruuta"> 
+</form>
+{% endblock %}

@@ -1,56 +1,51 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Muokkaa purjelentokoneen tietoja</title>
-</head>
+{% block title %} Purjelentokerho {% endblock %}
 
-<body>
+{% block subtitle %} Muokkaa purjelentokoneen tietoja {% endblock %}
 
-  <h1> Muokkaa purjelentokoneen tietoja </h1>
+{% block content %}
 
-  <form action="/update_item" method="post" enctype="multipart/form-data">
-    <p>
-      Konetyyppi: <br />
-      <input type="text" name="glider_type" value="{{ item.glider_type }}" maxlength="50" required/>
-    </p>
+<form action="/update_item" method="post" enctype="multipart/form-data">
+  <p>
+    Konetyyppi: <br />
+    <input type="text" name="glider_type" value="{{ item.glider_type }}" maxlength="50" required/>
+  </p>
 
-    <p>
-      Rekisteritunnus: <br />
-      <input type="text" name="callsign" size="8" value="{{ item.callsign }}" maxlength="10" required/>
-    </p>
+  <p>
+    Rekisteritunnus: <br />
+    <input type="text" name="callsign" size="8" value="{{ item.callsign }}" maxlength="10" required/>
+  </p>
 
-    <p>
-      Kilpailutunnus: <br />
-      <input type="text" name="compsign" size="5" value="{{ item.compsign }}" maxlength="5" required/>
-    </p>    
+  <p>
+    Kilpailutunnus: <br />
+    <input type="text" name="compsign" size="5" value="{{ item.compsign }}" maxlength="5" required/>
+  </p>    
 
-    <p>
-      Luokka: <br />
-      <input type="radio" name="glider_class" value="Vakio" {% if item.glider_class == 'Vakio' %}checked{% endif %}/> Vakio
-      <input type="radio" name="glider_class" value="15 m" {% if item.glider_class == '15 m' %}checked{% endif %} /> 15 m
-      <input type="radio" name="glider_class" value="18 m" {% if item.glider_class == '18 m' %}checked{% endif %}/> 18 m
-      <input type="radio" name="glider_class" value="Kaksipaikkainen" {% if item.glider_class == 'Kaksipaikkainen' %}checked{% endif %} /> Kaksipaikkainen
-      <input type="radio" name="glider_class" value="Vintage" {% if item.glider_class == 'Vintage' %}checked{% endif %}/> Vintage
-    </p>
+  <p>
+    Luokka: <br />
+    <input type="radio" name="glider_class" value="Vakio" {% if item.glider_class == 'Vakio' %}checked{% endif %}/> Vakio
+    <input type="radio" name="glider_class" value="15 m" {% if item.glider_class == '15 m' %}checked{% endif %} /> 15 m
+    <input type="radio" name="glider_class" value="18 m" {% if item.glider_class == '18 m' %}checked{% endif %}/> 18 m
+    <input type="radio" name="glider_class" value="Kaksipaikkainen" {% if item.glider_class == 'Kaksipaikkainen' %}checked{% endif %} /> Kaksipaikkainen
+    <input type="radio" name="glider_class" value="Vintage" {% if item.glider_class == 'Vintage' %}checked{% endif %}/> Vintage
+  </p>
 
-    <p>
-      Lisävalinnat:
-      <input type="radio" name="options" value="Ei moottoria" {% if item.options == 'Ei moottoria' %}checked{% endif %} /> Ei moottoria
-      <input type="radio" name="options" value="Turbo" {% if item.options == 'Turbo' %}checked{% endif %} /> Turbo
-      <input type="radio" name="options" value="FES" {% if item.options == 'FES' %}checked{% endif %}/> FES
-      <input type="radio" name="options" value="Suihkumoottori" {% if item.options == 'Suihkumoottori' %}checked{% endif %}/> Suihkumoottori
-    </p>
+  <p>
+    Lisävalinnat:
+    <input type="radio" name="options" value="Ei moottoria" {% if item.options == 'Ei moottoria' %}checked{% endif %} /> Ei moottoria
+    <input type="radio" name="options" value="Turbo" {% if item.options == 'Turbo' %}checked{% endif %} /> Turbo
+    <input type="radio" name="options" value="FES" {% if item.options == 'FES' %}checked{% endif %}/> FES
+    <input type="radio" name="options" value="Suihkumoottori" {% if item.options == 'Suihkumoottori' %}checked{% endif %}/> Suihkumoottori
+  </p>
 
-    <input type="hidden" name="item_id" value="{{ item.id }}" />
+  <input type="hidden" name="item_id" value="{{ item.id }}" />
 
-    <p>
-      Lisää kuva <it>(JPG- tai PNG-tiedosto)</it>:
-      <input type="file" name="image" value="image" accept=".jpg, .png"/> 
-    </p>
+  <p>
+    Lisää kuva <it>(JPG- tai PNG-tiedosto)</it>:
+    <input type="file" name="image" value="{{ item.image }}" accept=".jpg, .png"/> 
+  </p>
 
-    <input type="submit" value="Tallenna" />
-  </form>
-</body>
-
-</html>
+  <input type="submit" value="Tallenna" />
+</form>
+{% endblock %}

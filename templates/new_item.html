@@ -1,54 +1,50 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Lisää kerhoon uusi purjelentokone</title>
-</head>
+{% block title %} Purjelentokerho {% endblock %}
 
-<body>
+{% block subtitle %} Lisää uusi purjelentokone {% endblock %}
 
-  <h1> Lisää kerhoon uusi purjelentokone </h1>
+{% block content %}
 
-  <form action="/create_item" method="post" enctype="multipart/form-data">
-    <p>
-      Konetyyppi: <br />
-      <input type="text" name="glider_type" maxlength="50" required/>
-    </p>
+<form action="/create_item" method="post" enctype="multipart/form-data">
+  <p>
+    Konetyyppi: <br />
+    <input type="text" name="glider_type" maxlength="50" required/>
+  </p>
 
-    <p>
-      Rekisteritunnus: <br />
-      <input type="text" name="callsign" size="8" maxlength="10" required/>
-    </p>
+  <p>
+    Rekisteritunnus: <br />
+    <input type="text" name="callsign" size="8" maxlength="10" required/>
+  </p>
 
-    <p>
-      Kilpailutunnus: <br />
-      <input type="text" name="compsign" size="5" maxlength="5" required />
-    </p>    
+  <p>
+    Kilpailutunnus: <br />
+    <input type="text" name="compsign" size="5" maxlength="5" required />
+  </p>    
 
-    <p>
-      Luokka: <br />
-      <input type="radio" name="glider_class" value="Vakio" checked/> Vakio
-      <input type="radio" name="glider_class" value="15 m" /> 15 m
-      <input type="radio" name="glider_class" value="18 m" /> 18 m
-      <input type="radio" name="glider_class" value="Kaksipaikkainen" /> Kaksipaikkainen
-      <input type="radio" name="glider_class" value="Vintage" /> Vintage
-    </p>
+  <p>
+    Luokka: <br />
+    <input type="radio" name="glider_class" value="Vakio" checked/> Vakio
+    <input type="radio" name="glider_class" value="15 m" /> 15 m
+    <input type="radio" name="glider_class" value="18 m" /> 18 m
+    <input type="radio" name="glider_class" value="Kaksipaikkainen" /> Kaksipaikkainen
+    <input type="radio" name="glider_class" value="Vintage" /> Vintage
+  </p>
 
-    <p>
-      Lisävalinnat:
-      <input type="radio" name="options" value="Ei moottoria" checked/> Ei moottoria
-      <input type="radio" name="options" value="Turbo" /> Turbo
-      <input type="radio" name="options" value="FES" /> FES
-      <input type="radio" name="options" value="Suihkumoottori" /> Suihkumoottori
-    </p>
+  <p>
+    Lisävalinnat:
+    <input type="radio" name="options" value="Ei moottoria" checked/> Ei moottoria
+    <input type="radio" name="options" value="Turbo" /> Turbo
+    <input type="radio" name="options" value="FES" /> FES
+    <input type="radio" name="options" value="Suihkumoottori" /> Suihkumoottori
+  </p>
 
-    <p>
-      Lisää kuva <it>(JPG- tai PNG-tiedosto)</it>:
-      <input type="file" name="image" value="image" accept=".jpg, .png"/> 
-    </p>
+  <p>
+    Lisää kuva <it>(JPG- tai PNG-tiedosto)</it>:
+    <input type="file" name="image" value="image" accept=".jpg, .png"/> 
+  </p>
 
-    <input type="submit" value="Lisää" />
-  </form>
-</body>
+  <input type="submit" value="Lisää" />
+</form>
 
-</html>
+{% endblock %}

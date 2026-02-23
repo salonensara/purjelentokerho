@@ -1,0 +1,135 @@
+
+body {
+    margin: auto;
+    max-width: 50em;
+    font-family: "Montserrat", sans-serif;
+    background-color: rgb(31, 40, 59);
+    color: rgb(218, 235, 255);
+}
+
+h1 {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(218, 235, 255);
+    font-size: 3em;
+    
+}
+
+h2, h3 {
+    color: #007bff;
+}
+
+a:link {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #006de1;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1em;
+}
+
+.content {
+    background-color: rgb(35, 53, 91);
+    padding: 1em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    border: 0px;
+    border-radius: 10px;
+}
+
+.username {
+    text-align: center;
+    color: rgb(218, 235, 255);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    align-items: center;
+    width: 100%;
+    list-style: none;
+}
+
+
+.nav li {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 22px;
+    background-color: rgb(28, 50, 98);
+    padding: 5px;
+    margin: 5px;
+    border: 0px;
+    border-radius: 15px;
+    color: rgb(218, 235, 255);
+}
+
+.item {
+    padding: 1em;
+}
+
+/* Lomakkeen kentät */
+input[type="text"], 
+input[type="date"],
+input[type="password"],
+textarea {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background-color: rgb(218, 235, 255);
+}
+
+/* Lähetyspainike */
+input[type="submit"], 
+button[type="submit"] {
+    background-color: #007bff;
+    color: rgb(218, 235, 255);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 50%;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+input[type="submit"]:active {
+    background-color: #004085;
+    transform: translateY(1px);
+}
+
+.image {
+    padding: inherit;
+    margin-left: 0;
+    margin-right: 0;
+    width: 200px;
+    display: block;
+    text-align: center;
+    }
+
+.glider_info {
+    margin-left: 1em;
+}

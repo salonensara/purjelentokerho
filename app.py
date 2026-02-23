@@ -33,8 +33,10 @@ def create_reservation():
         abort(403)
     begin_date = request.form.get("begin_date")
     begin_date = datetime.strptime(begin_date, "%Y-%m-%d").date()
+    begin_date = begin_date.strftime("%d.%m.%Y")
     end_date = request.form.get("end_date")
     end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+    end_date = end_date.strftime("%d.%m.%Y")
     print(f"testi: {begin_date} ja {type(begin_date)}")
     items.add_reservation(item_id, begin_date, end_date, info, user_id)
 
@@ -139,12 +141,15 @@ def update_item():
     glider_class = request.form["glider_class"]
     options = request.form["options"]
     file = request.files["image"]
-    if not file.filename.endswith((".jpg", ".png")):
-        return "VIRHE: väärä tiedostomuoto"
+    if file:
+        if not file.filename.endswith((".jpg", ".png")):
+            return "VIRHE: väärä tiedostomuoto"
 
-    image = file.read()
-    if len(image) > 100*1024:
-        return "VIRHE: liian suuri kuva"
+        image = file.read()
+        if len(image) > 100*1024:
+            return "VIRHE: liian suuri kuva"
+    else:
+        image = items.get_item(item_id)["image"]
 
     items.update_item(item_id, glider_type, callsign, compsign, glider_class, options, image)
 
@@ -177,11 +182,14 @@ def register():
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
+    if not username or len(username) > 10:
+        abort(403)
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
         return "VIRHE: salasanat eivät ole samat"
-
+    if not password1 or len(password1) > 20:
+        abort(403)
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:

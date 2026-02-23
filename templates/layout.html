@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/main.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>
+            Purjelentokerho
+        </h1>
+    </div>
+
+    <nav>
+        <ul class="nav">
+            <li><a href="/">Etusivu</a></li>
+            <li><a href="/search_item">Haku</a></li>
+            {% if session.user_id %}
+            <li><a href="/new_item">Lisää purjelentokone</a></li>
+            <li><a href="/logout">Kirjaudu ulos</a></li>
+            {% else %}
+            <li><a href="/login">Kirjaudu sisään</a></li>
+            <li><a href="/register">Rekisteröidy</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="username">
+    {% if session.username %}
+        <p> Olet kirjautunut käyttäjällä <a href="/user/{{ session.user_id }}">{{ session.username }}</a></p>
+    {% endif %}
+    </div>
+
+<div class="subtitle">
+    <h2>{% block subtitle %} {% endblock %}</h2>
+</div>
+
+<div class="content">
+    {% block content %} {% endblock %}
+</div>
+
+</body>
+
+</html>
