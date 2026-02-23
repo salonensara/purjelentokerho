@@ -2,15 +2,15 @@
 
 ## Sovelluksen toiminnot
 
-- Sovelluksessa käyttäjät voivat varata purjelentokoneita. Purjelentokoneen tiedoissa lukee nimi, rekisteritunnus ja kisatunnus.
-- Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
-- Käyttäjä pystyy lisäämään purjelentokoneita ja muokkaamaan ja poistamaan niitä.
+- Käyttäjä pystyy luomaan käyttäjätunnuksen ja kirjautumaan sisään sovellukseen.
+- Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan purjelentokoneita.
+- Käyttäjä pystyy valitsemaan purjekoneelle yhden tai useamman luokittelun (luokka ja moottori).
 - Käyttäjä näkee sovellukseen lisätyt purjelentokoneet.
-- Käyttäjä pystyy etsimään prujelentokoneita hakusanalla.
-- Käyttäjäsivu näyttää, montako purjekonetta käyttäjä on lisännyt ja listan käyttäjän lisäämistä purjekoneista.
-- Käyttäjä pystyy valitsemaan purjekoneelle yhden tai useamman luokittelun (esim. kerholuokka, vakioluokka, 15m, turbo, itselähtevä).
-- Käyttäjä pystyy lisäämään varauksen purjekoneeseen. Ilmoituksessa näytetään, ketkä käyttäjät ovat konetta varanneet.
-- Tässä pääasiallinen tietokohde on purjelentokone ja toissijainen purjelentokoneen varaus.
+- Käyttäjä pystyy hakemaan purjelentokoneita konetyypin tai rekisteritunnuksen perusteella.
+- Käyttäjäsivu näyttää, montako purjelentokonetta käyttäjä on lisännyt ja listan käyttäjän lisäämistä purjelentokoneista.
+- Käyttäjä pystyy valitsemaan purjelentokoneelle yhden tai useamman luokittelun (luokka ja moottori).
+- Käyttäjä pystyy anomaan purjelentokoneen käyttöönsä. Ilmoituksessa näytetään, ketkä käyttäjät ovat konetta anoneet.
+- Tässä pääasiallinen tietokohde on purjelentokone ja toissijainen koneanomus.
 
 ## Sovelluksen asennus
 
