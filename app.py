@@ -1,5 +1,6 @@
 import sqlite3
 import secrets
+import markupsafe
 from datetime import datetime
 
 from flask import Flask
@@ -12,6 +13,12 @@ import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 def require_login():
     if "user_id" not in session:
@@ -87,7 +94,6 @@ def show_image(item_id):
 @app.route("/new_item")
 def new_item():
     require_login()
-    check_csrf()
     return render_template("new_item.html")
 
 @app.route("/create_item", methods=["POST"])
@@ -96,7 +102,7 @@ def create_item():
     check_csrf()
 
     glider_type = request.form["glider_type"]
-    if not glider_type or len(glider_type) > 50:
+    if not glider_type or len(glider_type) > 20:
         abort(403)
     callsign = request.form["callsign"]
     if not callsign or len(callsign) > 10:
@@ -107,15 +113,16 @@ def create_item():
     glider_class = request.form["glider_class"]
     options = request.form["options"]
     user_id = session["user_id"]
-
+    image = None
     file = request.files["image"]
-    if not file.filename.endswith((".jpg", ".png")):
-        return "VIRHE: väärä tiedostomuoto"
+    if file:
+        if not file.filename.endswith((".jpg", ".png")):
+            return "VIRHE: väärä tiedostomuoto"
 
-    image = file.read()
-    if len(image) > 100*1024:
-        return "VIRHE: liian suuri kuva"
-
+        image = file.read()
+        if len(image) > 100*1024:
+            return "VIRHE: liian suuri kuva"
+        
     items.add_item(glider_type, callsign, compsign, glider_class, options, image, user_id)
 
     return redirect("/")
@@ -123,7 +130,6 @@ def create_item():
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
     require_login()
-    check_csrf()
 
     item = items.get_item(item_id)
     if not item:

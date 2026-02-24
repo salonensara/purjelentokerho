@@ -2,7 +2,7 @@
 body {
     margin: auto;
     max-width: 50em;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Verdana", sans-serif;
     background-color: rgb(31, 40, 59);
     color: rgb(218, 235, 255);
 }
@@ -80,6 +80,8 @@ a:hover {
 
 .item {
     padding: 1em;
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 
 /* Lomakkeen kentät */
@@ -102,6 +104,7 @@ button[type="submit"] {
     background-color: #007bff;
     color: rgb(218, 235, 255);
     padding: 12px 24px;
+    margin: 5px;
     border: none;
     border-radius: 5px;
     font-size: 16px;

@@ -68,7 +68,7 @@
     <h3>
       <a href="/user/{{ reservations.user_id }}">{{ reservations.username }}</a> | {{ reservations.begin_date }} - {{ reservations.end_date }} 
     </h3>
-    <p>{{ reservations.info }}</p>
+    <p>{{ reservations.info | show_lines  }}</p>
   </div>
 
   {% endfor %}
